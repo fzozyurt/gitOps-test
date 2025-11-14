@@ -1,0 +1,20 @@
+name: Validate Kubernetes Manifests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Validate YAML
+      run: |
+        find manifests -name "*.yaml" -exec kubectl --dry-run=client apply -f {} \;
