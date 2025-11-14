@@ -6,9 +6,12 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/your-org/your-repo.git  # Replace with your Git repository URL
+    repoURL: git@github.com:fzozyurt/gitOps-test.git
     targetRevision: HEAD
     path: manifests
+    sshPrivateKeySecret:
+      name: argocd-ssh
+      key: ssh-privatekey
   syncPolicy:
     automated: {}
   destination:
