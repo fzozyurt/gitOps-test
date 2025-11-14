@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: apisix-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: apisix
+    repoURL: https://apache.github.io/apisix-helm-chart
+    targetRevision: 2.9.0  # Use a stable version, adjust as needed
+    helm:
+      values: |
+        # Default values, can be customized
+        replicaCount: 1
+        image:
+          repository: apache/apisix
+          tag: 3.11.0-debian
+        service:
+          type: LoadBalancer
+          ports:
+            - name: http
+              port: 80
+              targetPort: 9080
+            - name: https
+              port: 443
+              targetPort: 9443
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+  destination:
+    namespace: gitops-apps
+    server: https://kubernetes.default.svc
