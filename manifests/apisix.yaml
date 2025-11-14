@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
       - name: apisix
-        image: apache/apisix:3.9.1
+        image: apache/apisix:3.11.0-debian
         ports:
         - containerPort: 9080
         env:

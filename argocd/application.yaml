@@ -6,14 +6,15 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: git@github.com:fzozyurt/gitOps-test.git
+    repoURL: https://github.com/fzozyurt/gitOps-test.git
     targetRevision: HEAD
     path: manifests
-    sshPrivateKeySecret:
-      name: argocd-ssh
-      key: ssh-privatekey
   syncPolicy:
-    automated: {}
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
   destination:
-    namespace: default
+    namespace: gitops-apps
     server: https://kubernetes.default.svc
